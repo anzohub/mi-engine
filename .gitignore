@@ -102,6 +102,9 @@ http-client.private.env.json
 # GitHub Copilot persisted migration data
 .idea/**/copilot.data.migration.*.xml
 
+# IA
+.junie/
+
 # =========================
 # OS
 # =========================
