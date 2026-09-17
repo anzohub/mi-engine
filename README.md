@@ -40,16 +40,29 @@ The monorepo uses `vp` (Vite+) to run workspace commands:
 ## Project Structure
 
 ```text
+├── adr/                 # Architecture Decision Records (ADRs)
 ├── apps/
-│   ├── studio/          # Engine studio editor
-│   └── playground/      # Graphics & runtime experimentation
+│   ├── docs/            # Documentation portal boundary (unlinked)
+│   ├── playground/      # Graphics & runtime experimentation
+│   └── studio/          # Engine studio editor
+├── design/
+│   ├── exports/         # Visual exports and reference assets
+│   └── tokens/          # Design token artifacts
+├── docs/
+│   ├── architecture/    # Living architecture and package topology
+│   ├── contributing/    # Contributor reference documentation
+│   ├── guides/          # Practical recipes and task guides
+│   ├── handbook/        # Concepts, workflows, and learning material
+│   ├── reference/       # Public API contracts, schemas, and specs
+│   └── research/        # Technical investigations and benchmarks
 ├── packages/
-│   ├── core/            # Core primitives and types
-│   ├── runtime/         # World and ECS runtime state
-│   ├── renderer/        # Backend-agnostic rendering abstractions
-│   ├── webgpu/          # WebGPU backend implementation
 │   ├── assets/          # Asset loaders and caching
-│   └── editor/          # Editor state and command model
+│   ├── core/            # Core primitives and types
+│   ├── editor/          # Editor state and command model
+│   ├── renderer/        # Backend-agnostic rendering abstractions
+│   ├── runtime/         # World and ECS runtime state
+│   └── webgpu/          # WebGPU backend implementation
+├── CONTRIBUTING.md      # Contribution policy and guidelines
 ├── package.json         # Monorepo root configuration
 └── pnpm-workspace.yaml
 ```
