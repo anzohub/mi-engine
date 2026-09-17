@@ -1,0 +1,16 @@
+{
+  "name": "@mi-engine/webgpu",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@mi-engine/core": "workspace:*",
+    "@mi-engine/renderer": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  }
+}

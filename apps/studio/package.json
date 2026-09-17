@@ -1,0 +1,9 @@
+{
+  "name": "@mi-engine/studio",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "typescript": "catalog:"
+  }
+}

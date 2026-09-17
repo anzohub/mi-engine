@@ -1,0 +1,24 @@
+packages:
+  - apps/*
+  - packages/*
+
+catalogMode: strict
+
+catalog:
+  "@types/node": "26.6.1"
+  typescript: "7.0.2"
+  vite: "npm:@voidzero-dev/vite-plus-core@0.3.2"
+  vite-plus: "0.3.2"
+
+overrides:
+  vite@*: "catalog:"
+
+peerDependencyRules:
+  allowAny:
+    - vite
+  allowedVersions:
+    vite: "*"
+
+nodeVersion: "26.9.0"
+engineStrict: true
+minimumReleaseAge: 2880
