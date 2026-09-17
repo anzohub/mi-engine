@@ -1,0 +1,16 @@
+{
+  "name": "@mi-engine/editor",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@mi-engine/core": "workspace:*",
+    "@mi-engine/runtime": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  }
+}
