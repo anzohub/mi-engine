@@ -33,6 +33,7 @@ The monorepo uses `vp` (Vite+) to run workspace commands:
   ```
 
 - **Build the monorepo**:
+
   ```bash
   vp run -r build
   ```
