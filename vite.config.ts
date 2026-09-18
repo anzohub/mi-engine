@@ -2,7 +2,8 @@ import { defineConfig } from "vite-plus";
 
 export default defineConfig({
   staged: {
-    "*": "vp check --fix",
+    "*": ["vp check --fix", "pnpm lint:spell"],
+    "*.md": "markdownlint --ignore-path .gitignore",
   },
   fmt: {},
   lint: {

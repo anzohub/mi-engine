@@ -4,11 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "ready": "vp check && vp run -r test && vp run -r build",
+    "ready": "pnpm check && vp run -r test && vp run -r build",
     "prepare": "vp config",
-    "lint:md": "markdownlint \"**/*.md\" --ignore-path .gitignore"
+    "check": "pnpm lint && vp check --no-lint",
+    "lint": "vp lint && pnpm lint:md && pnpm lint:spell",
+    "lint:md": "markdownlint \"**/*.md\" --ignore-path .gitignore",
+    "lint:spell": "cspell --no-must-find-files --no-progress"
   },
   "devDependencies": {
+    "cspell": "catalog:",
     "markdownlint-cli": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:"

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "language": "en",
+  "useGitignore": true,
+  "ignorePaths": [
+    "node_modules",
+    "pnpm-lock.yaml",
+    ".git",
+    ".vite-hooks",
+    ".idea",
+    ".gitignore",
+    "*.penpot",
+    "dist",
+    "coverage"
+  ],
+  "words": [
+    "devEngines",
+    "monorepo",
+    "oxfmt",
+    "oxlint",
+    "penpot",
+    "pnpm",
+    "toolchain",
+    "toolchains",
+    "tsbuildinfo",
+    "vite",
+    "voidzero",
+    "webgpu",
+    "wgsl"
+  ],
+  "files": ["**"]
+}
