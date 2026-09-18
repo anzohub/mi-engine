@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "ready": "vp check && vp run -r test && vp run -r build",
-    "prepare": "vp config"
+    "prepare": "vp config",
+    "lint:md": "markdownlint \"**/*.md\" --ignore-path .gitignore"
   },
   "devDependencies": {
+    "markdownlint-cli": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
