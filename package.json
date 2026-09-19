@@ -7,7 +7,7 @@
     "ready": "pnpm check && vp run -r test && vp run -r build",
     "prepare": "vp config",
     "check": "pnpm lint && vp check --no-lint",
-    "lint": "vp lint && pnpm lint:md && pnpm lint:spell && lint:css",
+    "lint": "vp lint && pnpm lint:md && pnpm lint:spell && pnpm lint:css",
     "lint:md": "markdownlint \"**/*.md\" --ignore-path .gitignore",
     "lint:spell": "cspell --no-must-find-files --no-progress",
     "lint:css": "stylelint \"**/*.css\" --ignore-path .gitignore"
