@@ -7,13 +7,16 @@
     "ready": "pnpm check && vp run -r test && vp run -r build",
     "prepare": "vp config",
     "check": "pnpm lint && vp check --no-lint",
-    "lint": "vp lint && pnpm lint:md && pnpm lint:spell",
+    "lint": "vp lint && pnpm lint:md && pnpm lint:spell && lint:css",
     "lint:md": "markdownlint \"**/*.md\" --ignore-path .gitignore",
-    "lint:spell": "cspell --no-must-find-files --no-progress"
+    "lint:spell": "cspell --no-must-find-files --no-progress",
+    "lint:css": "stylelint \"**/*.css\" --ignore-path .gitignore"
   },
   "devDependencies": {
     "cspell": "catalog:",
     "markdownlint-cli": "catalog:",
+    "stylelint": "catalog:",
+    "stylelint-config-standard": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },

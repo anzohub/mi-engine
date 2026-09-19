@@ -4,6 +4,7 @@ export default defineConfig({
   staged: {
     "*": ["vp check --fix", "pnpm lint:spell"],
     "*.md": "markdownlint --ignore-path .gitignore",
+    "*.css": "stylelint --ignore-path .gitignore",
   },
   fmt: {},
   lint: {
