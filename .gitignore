@@ -43,6 +43,7 @@ playwright/.auth/
 # Tool Caches
 .eslintcache
 .stylelintcache
+.angular/
 
 # VS Code
 .vscode/*
