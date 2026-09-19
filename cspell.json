@@ -27,7 +27,9 @@
     "vite",
     "voidzero",
     "webgpu",
-    "wgsl"
+    "wgsl",
+    "tsgolint",
+    "vitest"
   ],
   "files": ["**"]
 }

@@ -9,8 +9,8 @@ catalog:
   cspell: "10.3.3"
   markdownlint-cli: "0.49.1"
   typescript: "7.0.2"
-  vite: "npm:@voidzero-dev/vite-plus-core@0.3.2"
-  vite-plus: "0.3.2"
+  vite: npm:@voidzero-dev/vite-plus-core@0.3.3
+  vite-plus: 0.3.3
 
 overrides:
   vite@*: "catalog:"
@@ -24,3 +24,14 @@ peerDependencyRules:
 nodeVersion: "26.9.0"
 engineStrict: true
 minimumReleaseAge: 2880
+minimumReleaseAgeExclude:
+  - vite-plus
+  - "@voidzero-dev/*"
+  - oxlint
+  - "@oxlint/*"
+  - oxlint-tsgolint
+  - "@oxlint-tsgolint/*"
+  - oxfmt
+  - "@oxfmt/*"
+  - vitest
+  - "@vitest/*"
