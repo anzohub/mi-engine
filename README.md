@@ -53,6 +53,12 @@ The monorepo uses `vp` (Vite+) to run workspace commands:
   vp run -r build
   ```
 
+- **Start the Studio editor**:
+
+  ```bash
+  vp run --filter @mi-engine/studio start
+  ```
+
 ## Documentation
 
 Project documentation is organized by purpose:

@@ -29,7 +29,10 @@
     "webgpu",
     "wgsl",
     "tsgolint",
-    "vitest"
+    "vitest",
+    "esbuild",
+    "lmdb",
+    "msgpackr"
   ],
   "files": ["**"]
 }

@@ -1,7 +1,16 @@
 {
   "extends": "../../tsconfig.json",
+  "compileOnSave": false,
   "compilerOptions": {
-    "lib": ["ES2022", "DOM"]
+    "target": "ES2022",
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM"],
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "noPropertyAccessFromIndexSignature": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -9,5 +18,13 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "include": ["src"]
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
 }
