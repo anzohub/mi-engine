@@ -1,2 +1,2 @@
 // Playground application entry placeholder
-export {};
+export const isPlayground = true;
