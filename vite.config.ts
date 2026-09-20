@@ -6,12 +6,35 @@ export default defineConfig({
     "*.md": "markdownlint --ignore-path .gitignore",
     "*.css": "stylelint --ignore-path .gitignore",
   },
+
   fmt: {},
+
   lint: {
-    jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
-    rules: { "vite-plus/prefer-vite-plus-imports": "error" },
-    options: { typeAware: true, typeCheck: true },
+    jsPlugins: [
+      {
+        name: "vite-plus",
+        specifier: "vite-plus/oxlint-plugin",
+      },
+    ],
+
+    categories: {
+      correctness: "error",
+      suspicious: "warn",
+      pedantic: "warn",
+      perf: "warn",
+    },
+
+    rules: {
+      "vite-plus/prefer-vite-plus-imports": "error",
+      complexity: ["warn", { max: 10, variant: "classic" }],
+    },
+
+    options: {
+      typeAware: true,
+      typeCheck: true,
+    },
   },
+
   run: {
     cache: true,
   },

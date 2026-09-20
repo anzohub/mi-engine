@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "oxc.oxc-vscode",
+    "angular.ng-template",
+    "github.vscode-github-actions",
+    "stylelint.vscode-stylelint",
+    "streetsidesoftware.code-spell-checker",
+    "DavidAnson.vscode-markdownlint",
+    "vitest.explorer",
+    "davidanson.vscode-markdownlint"
+  ]
+}
