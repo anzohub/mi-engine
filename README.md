@@ -1,7 +1,7 @@
 # mi engine
 
-A 3D/2D engine and editor for the modern web, built from first principles
-with TypeScript and WebGPU.
+A modular engine and browser-based editor for building interactive web
+experiences with TypeScript and WebGPU.
 
 > 🚧 **Early development** — actively being built.
 
@@ -9,11 +9,16 @@ with TypeScript and WebGPU.
 
 ## Overview
 
-**mi engine** is a 2D/3D graphics engine and editor for the modern web
-platform, built with TypeScript and WebGPU.
+**mi-engine** is a modular engine and browser-based editor for building
+interactive web experiences with TypeScript and WebGPU.
 
-The project aims to provide a modular foundation for building interactive
-2D/3D applications and editor tooling directly in the browser.
+It combines a framework-agnostic runtime with a browser-based authoring
+environment. The project is in early development, and its current packages and
+Studio shell provide the foundation for that direction.
+
+The architecture is designed to evolve through modular capabilities and
+specialized authoring workflows without coupling the engine core to a specific
+platform, framework, or type of experience.
 
 The repository is structured as a monorepo powered by Vite+ and pnpm.
 
@@ -123,11 +128,3 @@ Contribution guidelines are available in
 
 Please review the relevant documentation and architecture decisions before
 making changes to the project.
-
-## Design
-
-Design-system assets, executable design tokens, and versioned visual exports
-are maintained under [`design/`](./design/README.md).
-
-See the [design documentation](./design/README.md) for the design system,
-tooling, source-of-truth responsibilities, and artifact conventions.

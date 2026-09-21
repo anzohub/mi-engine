@@ -32,12 +32,9 @@ flowchart TB
     WebGPU --> Core
 
     Editor --> Runtime
-    Editor --> Assets
-
-    Renderer --> Runtime
+    Editor --> Core
     Renderer --> Core
 
-    Assets --> Runtime
     Assets --> Core
 
     Runtime --> Core
@@ -46,10 +43,13 @@ flowchart TB
 ## Dependency Rules
 
 - `runtime` depends on `core`.
-- `renderer` depends on `runtime` and `core`.
-- `assets` depends on `runtime` and `core`.
+- `renderer` depends on `core`.
+- `assets` depends on `core`.
 - `webgpu` depends on `renderer` and `core`.
-- `editor` consumes the public APIs of `runtime` and `assets`.
+- `editor` depends on `core` and `runtime`.
+- The package source is currently a minimal version surface. Runtime, renderer,
+  asset, and editor capabilities will be added behind these existing package
+  boundaries as their implementation becomes real.
 - `renderer` must not depend on `webgpu`.
 - `core` and `runtime` remain independent of Angular, the DOM, and concrete
   rendering implementations.
@@ -61,13 +61,15 @@ flowchart TB
 
 ### Studio
 
-`apps/studio` is the Angular application shell. It consumes `@mi-engine/editor`
-and other public engine APIs.
+`apps/studio` is the Angular application shell. It does not currently declare a
+dependency on engine packages or compose an editor workflow. When that
+integration is added, it must consume public package exports and keep Angular
+and Studio-specific code at the application boundary.
 
 Engine packages must not depend on Angular or on Studio internals.
 
 ### Playground
 
-`apps/playground` is used for runtime, rendering, experiments, and smoke
-testing. It consumes public engine packages and must not depend on Studio
-internals.
+`apps/playground` is reserved for runtime, rendering, experiments, and smoke
+testing. Its current entry point is only a placeholder. It must consume public
+engine packages and must not depend on Studio internals.
