@@ -1,12 +1,10 @@
 {
   "recommendations": [
-    "oxc.oxc-vscode",
+    "VoidZero.vite-plus-extension-pack",
     "angular.ng-template",
     "github.vscode-github-actions",
     "stylelint.vscode-stylelint",
     "streetsidesoftware.code-spell-checker",
-    "DavidAnson.vscode-markdownlint",
-    "vitest.explorer",
     "davidanson.vscode-markdownlint"
   ]
 }
