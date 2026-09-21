@@ -26,6 +26,14 @@ export default defineConfig({
 
     rules: {
       "vite-plus/prefer-vite-plus-imports": "error",
+
+      "unicorn/filename-case": [
+        "error",
+        {
+          case: "kebabCase",
+        },
+      ],
+
       complexity: ["warn", { max: 10, variant: "classic" }],
     },
 
