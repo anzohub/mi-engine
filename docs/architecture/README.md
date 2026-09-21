@@ -21,3 +21,5 @@ rather than rewriting historical records.
 
 - [Package Dependencies](package-dependencies.md): Package topology, consumption
   rules, and boundary constraints.
+- [Extensibility and Boundaries](extensibility.md): Current extensibility state,
+  dependency direction, and rules for future features and workflows.
