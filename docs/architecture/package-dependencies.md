@@ -73,3 +73,32 @@ Engine packages must not depend on Angular or on Studio internals.
 `apps/playground` is reserved for runtime, rendering, experiments, and smoke
 testing. Its current entry point is only a placeholder. It must consume public
 engine packages and must not depend on Studio internals.
+
+### Docs
+
+`apps/docs` reserves the workspace boundary for the future documentation portal.
+It does not contain an active `package.json` and currently serves as an
+architectural boundary. When implemented, it will consume canonical
+documentation from `docs/` and public package contracts without serving as an
+independent or competing source of truth.
+
+## Package Boundaries and Scaling
+
+- **Extracting Packages**: A feature does not automatically require a new package.
+  Extract a new package only when there is a real architectural boundary, clear
+  ownership, and sufficient independence to justify separate versioning and
+  testing.
+- **Dependency Flow**: Specializations and leaf implementations depend on
+  foundational engine contracts; engine packages never depend on applications,
+  genres, workflows, or concrete backends.
+- **Repository Scaling**: The repository maintains a flat `packages/*`
+  organization. Physical domain grouping should only be considered if the number
+  of packages grows substantially and navigation demands it. Such grouping must
+  never become an architectural dependency.
+- **Governing Rule**:
+  > Create boundaries because responsibilities and dependencies require them;
+  > group packages physically only when repository scale makes that organization
+  > useful.
+- **Architecture Decision Records**: Any change that introduces new package
+  boundaries, alters dependency relationships, or introduces public architectural
+  contracts must be recorded in an ADR in `adr/` (see `adr/README.md`).
