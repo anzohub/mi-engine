@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "vp run --filter @mi-engine/studio start",
     "ready": "pnpm check && vp run -r test && vp run -r build",
     "prepare": "vp config",
     "check": "pnpm lint && vp check --no-lint",
