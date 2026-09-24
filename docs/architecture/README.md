@@ -27,12 +27,59 @@ rather than rewriting historical records.
   Workspaces/Configuration. Specializations depend on the engine; the engine
   never depends on a specialization.
 - **Workspaces and Profiles**: Workspaces provide focused working surfaces
-  within Studio (such as a viewport canvas, timeline, or node graph); an Authoring
-  Profile coordinates the workflow and can utilize multiple Workspaces.
-- **Boundaries and Scaling**: Packages maintain a flat structure in `packages/*`.
-  Create boundaries because responsibilities and dependencies require them;
-  group packages physically only when repository scale makes that organization
-  useful.
+  within Studio (such as a viewport canvas, timeline, or node graph); an
+  Authoring Profile coordinates the workflow and can utilize multiple
+  Workspaces.
+- **Package Boundaries and Scaling**: Packages are independently bounded by
+  their responsibilities, public APIs, and dependency constraints. Packages
+  may be grouped physically by architectural family when that improves
+  repository organization, without making the grouping directory a package
+  itself.
+- **Framework Independence**: Foundational engine and editor packages remain
+  independent from application frameworks. Framework-specific concerns belong
+  at the application and framework-specific UI boundaries.
+- **Portable UI**: Generic UI primitives are exposed through framework-agnostic
+  Web Component APIs. Studio-specific UI may use Angular and Angular-specific
+  infrastructure without coupling the portable UI layer to Angular.
+
+## Package and UI Structure
+
+The repository separates framework-agnostic engine packages, portable UI, and
+Studio-specific UI:
+
+```text
+packages/
+├── assets/
+├── core/
+├── editor/
+├── renderer/
+├── runtime/
+├── webgpu/
+└── ui/
+    ├── web-components/
+    └── studio/
+        └── angular/
+```
+
+The UI hierarchy is organizational as well as architectural:
+
+- **`ui/web-components/`**: Framework-agnostic UI primitives exposed through
+  standard Web Component APIs.
+- **`ui/studio/angular/`**: Angular-specific UI coupled to Studio or the editor
+  domain.
+
+The application layer remains separate:
+
+```text
+apps/
+├── docs/
+├── playground/
+└── studio/
+    └── angular/
+```
+
+`apps/studio/angular/` owns application composition, while reusable UI belongs
+in the corresponding UI packages.
 
 ## Topics
 
