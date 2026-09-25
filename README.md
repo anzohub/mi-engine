@@ -94,31 +94,37 @@ responsibility as the project owner and developer.
 ## Project Structure
 
 ```text
-├── adr/                 # Architecture Decision Records (ADRs)
+├── adr/                         # Architecture Decision Records (ADRs)
 ├── apps/
-│   ├── docs/            # Documentation portal boundary (unlinked)
-│   ├── playground/      # Graphics & runtime experimentation
-│   └── studio/          # Engine studio editor
+│   ├── docs/                   # Documentation portal boundary
+│   ├── playground/             # Graphics, runtime, experiments, and smoke testing
+│   ├── studio/
+│   │   └── angular/            # Angular Studio application
+│   └── web/                    # Public-facing project and product portal (planned)
 ├── design/
-│   ├── exports/         # Visual exports and reference assets
-│   └── tokens/          # Design token artifacts
+│   ├── exports/                # Visual exports and reference assets
+│   └── tokens/                 # Design token artifacts
 ├── docs/
-│   ├── architecture/    # Living architecture and package topology
-│   ├── contributing/    # Contributor reference documentation
-│   ├── guides/          # Practical recipes and task guides
-│   ├── handbook/        # Concepts, workflows, and learning material
-│   ├── reference/       # Public API contracts, schemas, and specs
-│   └── research/        # Technical investigations and benchmarks
+│   ├── architecture/           # Living architecture and package topology
+│   ├── contributing/           # Contributor reference documentation
+│   ├── guides/                 # Practical recipes and task guides
+│   ├── handbook/               # Concepts, workflows, and learning material
+│   ├── reference/              # Public API contracts, schemas, and specs
+│   └── research/               # Technical investigations and benchmarks
 ├── packages/
-│   ├── assets/          # Asset loaders and caching
-│   ├── core/            # Core primitives and types
-│   ├── editor/          # Editor state and command model
-│   ├── renderer/        # Backend-agnostic rendering abstractions
-│   ├── runtime/         # World and ECS runtime state
-│   └── webgpu/          # WebGPU backend implementation
-├── CONTRIBUTING.md      # Contribution policy and guidelines
-├── package.json         # Monorepo root configuration
-└── pnpm-workspace.yaml
+│   ├── assets/                 # Asset loaders and caching
+│   ├── core/                   # Core primitives and types
+│   ├── editor/                 # Headless editor state and command model
+│   ├── renderer/               # Backend-agnostic rendering abstractions
+│   ├── runtime/                # World and ECS runtime state
+│   ├── ui/
+│   │   ├── studio/
+│   │   │   └── angular/        # Angular-specific reusable Studio UI
+│   │   └── web-components/     # Framework-agnostic UI primitives
+│   └── webgpu/                 # WebGPU backend implementation
+├── CONTRIBUTING.md             # Contribution policy and guidelines
+├── package.json                # Monorepo root configuration
+└── pnpm-workspace.yaml         # Workspace and package configuration
 ```
 
 ## Contributing

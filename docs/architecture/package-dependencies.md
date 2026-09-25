@@ -21,7 +21,7 @@ rather than foundational package dependencies.
 }}%%
 
 flowchart TB
-    StudioUI["@mi-engine/studio-ui-angular"]
+    StudioUI["@mi-engine/ui-studio-angular"]
     WebComponents["@mi-engine/ui-web-components"]
     WebGPU["@mi-engine/webgpu"]
     Renderer["@mi-engine/renderer"]
