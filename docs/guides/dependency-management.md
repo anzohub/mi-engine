@@ -263,7 +263,7 @@ that it would rewrite a concrete version declared directly in `package.json`.
 
 Before performing an Angular update through a catalog-based workspace:
 
-1. Check the current Angular CLI behavior for pnpm catalogs.
+1. Check the Angular CLI behavior for pnpm catalogs.
 2. Identify which catalog entries must change.
 3. Update the catalog deliberately when required.
 4. Run the Angular migrations against the intended source and target versions.
@@ -393,7 +393,48 @@ Instead:
 This prevents a repository-wide catalog or override from forcing an unsupported
 dependency version onto another workspace consumer.
 
-## 12. Validate the Dependency Graph
+## 12. Understand Peer Dependency Contexts
+
+pnpm may report more than one instance of a dependency even when only one
+version is installed.
+
+For example:
+
+```text
+Found 1 version, 2 instances of vitest
+```
+
+does not necessarily mean that two Vitest versions are installed.
+
+pnpm can create separate peer dependency contexts for the same package version
+when different consumers require different peer sets.
+
+Distinguish between:
+
+```text
+One version, multiple peer contexts
+```
+
+and:
+
+```text
+Multiple package versions
+```
+
+Use the version summary at the end of commands such as:
+
+```bash
+pnpm why <package>
+```
+
+to determine whether multiple actual versions exist.
+
+When peer contexts are present, inspect the dependency tree before introducing
+additional overrides.
+
+Do not add overrides simply because pnpm reports multiple peer contexts.
+
+## 13. Validate the Dependency Graph
 
 After dependency changes have been installed, inspect the resolved dependency
 tree.
@@ -407,22 +448,16 @@ pnpm why typescript
 pnpm list vite vitest typescript --depth 10
 ```
 
-When using Vite+, inspect the resolved toolchain when needed:
-
-```bash
-vp toolchain
-vp toolchain vitest
-```
-
 These commands help identify:
 
 - multiple installed versions;
+- separate peer dependency contexts;
 - unexpected transitive dependencies;
 - overridden packages;
 - peer dependency relationships;
 - packages still depending on older versions.
 
-Distinguish between:
+The important distinction is:
 
 ```text
 Manifest declaration
@@ -437,7 +472,108 @@ Resolved dependency graph
 Always validate the resolved graph rather than inferring compatibility only
 from `package.json` or `pnpm-workspace.yaml`.
 
-## 13. Install Dependencies
+## 14. Run Tests Through the Repository Task Graph
+
+The monorepo may contain projects that use different test runners or framework
+integrations.
+
+Use the repository task runner to execute each package's declared `test`
+script:
+
+```bash
+vp run -r test
+```
+
+This preserves the test command defined by each workspace package.
+
+For example, an Angular application may define:
+
+```json
+{
+  "scripts": {
+    "test": "ng test"
+  }
+}
+```
+
+In that case:
+
+```bash
+vp run -r test
+```
+
+will invoke:
+
+```text
+workspace package
+    ↓
+test script
+    ↓
+ng test
+    ↓
+Angular test builder
+    ↓
+Vitest
+```
+
+This is the preferred approach for running tests across the whole monorepo.
+
+### Direct Vite+ Tests
+
+Use:
+
+```bash
+vp test
+```
+
+when the project is configured to use Vite+'s test runner directly.
+
+Do not assume that `vp test` is a universal replacement for each package's
+framework-specific test command.
+
+For an Angular application, prefer its `ng test` integration through the
+workspace task graph:
+
+```bash
+vp run -r test
+```
+
+This ensures that Angular-specific test setup is applied.
+
+## 15. Build Through the Repository Task Graph
+
+Use the repository task runner to build all workspace projects:
+
+```bash
+vp run -r build
+```
+
+Each package's own `build` script remains responsible for selecting the
+appropriate build system.
+
+For example, an Angular application may define:
+
+```json
+{
+  "scripts": {
+    "build": "ng build"
+  }
+}
+```
+
+Running:
+
+```bash
+vp run -r build
+```
+
+therefore preserves the Angular build workflow while allowing Vite+ to
+orchestrate the monorepo.
+
+This is preferred over replacing every package's build command with a direct
+Vite+ command.
+
+## 16. Install Dependencies
 
 After dependency declarations or catalog entries have changed, install the
 workspace dependencies.
@@ -454,8 +590,8 @@ When working directly with pnpm:
 pnpm install
 ```
 
-Both should operate on the same workspace configuration and lockfile when pnpm
-is the configured package manager.
+Both operate on the configured pnpm workspace when pnpm is the repository's
+package manager.
 
 For reproducible CI installation, use the appropriate frozen-lockfile mode:
 
@@ -471,7 +607,7 @@ pnpm install --frozen-lockfile
 
 Do not manually edit the lockfile to hide dependency conflicts.
 
-## 14. Validate the Repository
+## 17. Validate the Repository
 
 After dependency updates, run the repository validation checks:
 
@@ -481,7 +617,8 @@ vp run -r test
 vp run -r build
 ```
 
-For Vite+ workflows, also use the corresponding commands when appropriate:
+For direct Vite+ workflows, also use the corresponding commands when
+appropriate:
 
 ```bash
 vp check
@@ -489,13 +626,16 @@ vp test
 vp build
 ```
 
+Use the repository task graph for framework-specific projects and direct Vite+
+commands for projects that are configured around Vite+ itself.
+
 Resolve peer dependency errors rather than using `--force` unless the
 incompatibility is explicitly understood and intentional.
 
 A successful installation is not sufficient evidence that the resulting
 toolchain is compatible.
 
-## 15. Keep Lockfiles and Catalogs Consistent
+## 18. Keep Lockfiles and Catalogs Consistent
 
 Dependency updates should modify dependency declarations and the lockfile as a
 single logical change.
@@ -523,7 +663,7 @@ Review lockfile changes together with:
 
 Do not manually edit the lockfile to force a desired version.
 
-## 16. Record Dependency Architecture Decisions
+## 19. Record Dependency Architecture Decisions
 
 Add an ADR in `adr/` when a dependency change:
 
@@ -542,7 +682,7 @@ package responsibilities change.
 Document implemented dependency behavior as current behavior and keep future
 migration plans explicitly marked as future.
 
-## 17. Guiding Principles
+## 20. Guiding Principles
 
 - Centralize dependency versions when the repository intends to share them.
 - Keep framework-specific dependency sets together when they must move as a
@@ -557,4 +697,6 @@ migration plans explicitly marked as future.
 - Prefer a separate version set over an unsafe repository-wide override when
   consumers require incompatible versions.
 - Validate the resolved dependency graph, not only the declared manifests.
+- Use the repository task graph to preserve framework-specific test and build
+  integrations.
 - Prefer deliberate compatibility over repository-wide version uniformity.
