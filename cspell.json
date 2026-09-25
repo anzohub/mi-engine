@@ -15,8 +15,15 @@
     "coverage"
   ],
   "words": [
+    "Anson",
+    "davidanson",
     "devEngines",
+    "esbuild",
+    "jsdom",
+    "lmdb",
+    "Lockfiles",
     "monorepo",
+    "msgpackr",
     "oxfmt",
     "oxlint",
     "penpot",
@@ -24,17 +31,12 @@
     "toolchain",
     "toolchains",
     "tsbuildinfo",
+    "tsgolint",
     "vite",
+    "vitest",
     "voidzero",
     "webgpu",
-    "wgsl",
-    "tsgolint",
-    "vitest",
-    "esbuild",
-    "lmdb",
-    "msgpackr",
-    "Anson",
-    "davidanson"
+    "wgsl"
   ],
   "files": ["**"]
 }
