@@ -33,6 +33,7 @@ test-results/
 playwright-report/
 blob-report/
 playwright/.auth/
+.vitest/
 
 # Environment Variables
 *.local

@@ -17,9 +17,9 @@ catalog:
   stylelint-config-standard: "40.0.0"
   tslib: "2.8.1"
   typescript: "6.0.2"
-  vite: "npm:@voidzero-dev/vite-plus-core@0.3.3"
-  vite-plus: "0.3.3"
-  vitest: "4.1.11"
+  vite: npm:@voidzero-dev/vite-plus-core@1.0.0-rc.0
+  vite-plus: 1.0.0-rc.0
+  vitest: 5.0.1
 
 catalogs:
   angular:
@@ -40,8 +40,10 @@ overrides:
 peerDependencyRules:
   allowAny:
     - vite
+    - vitest
   allowedVersions:
     vite: "*"
+    vitest: "*"
 
 nodeVersion: "26.9.0"
 engineStrict: true
@@ -52,3 +54,14 @@ allowBuilds:
   esbuild: true
   lmdb: true
   msgpackr-extract: true
+minimumReleaseAgeExclude:
+  - vite-plus
+  - "@voidzero-dev/*"
+  - oxlint
+  - "@oxlint/*"
+  - oxlint-tsgolint
+  - "@oxlint-tsgolint/*"
+  - oxfmt
+  - "@oxfmt/*"
+  - vitest
+  - "@vitest/*"
