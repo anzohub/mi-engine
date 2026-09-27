@@ -113,6 +113,8 @@ Avoid inverted dependencies such as:
 - `renderer` → concrete WebGPU
 - `ui/web-components` → Angular
 - `ui/web-components` → Studio
+- `ui/shared/angular` → Studio-specific UI
+- `ui/shared/angular` → application-specific code
 
 All dependencies must follow a strict unidirectional flow toward contracts and
 foundational layers.
@@ -122,18 +124,18 @@ foundational layers.
 The package dependency direction is the primary extensibility mechanism today:
 
 ```text
-Applications
+Applications / Examples
     |
-    +----------------------+----------------------+
-    |                      |                      |
-    v                      v                      v
-Studio UI Angular       Editor               Web / Docs /
-    |                      |                 Playground
+    +----------------------+----------------------+----------------------+
+    |                      |                      |                      |
+    v                      v                      v                      v
+Studio UI Angular       Editor               Web / Docs /         Other
+    |                      |                 Playground            consumers
     v                      v
-UI Web Components      Runtime
-                           |
-                           v
-                          Core
+Shared UI             Runtime
+    |                      |
+    v                      v
+UI Web Components      Core
 
 Renderer
     |
@@ -164,11 +166,11 @@ The `editor` package is headless and must remain independent from Angular and
 Studio UI.
 
 The portable UI package uses Web Components as its public framework-agnostic
-boundary. Framework-specific integration belongs in the corresponding
-framework-specific application layer.
+boundary. Framework-specific UI integration belongs in the corresponding
+framework-specific UI package.
 
-Applications are consumers of engine and UI contracts rather than owners of
-foundational engine architecture.
+Applications and examples are consumers of engine and UI contracts rather than
+owners of foundational engine architecture.
 
 `apps/web` is a product-facing application and must remain independent from
 Studio internals.
@@ -194,17 +196,22 @@ Their responsibilities are distinct:
 
 - `apps/web`: public-facing project and product portal.
 - `apps/docs`: documentation portal.
-- `apps/playground`: executable experimentation and rendering validation.
+- `apps/playground`: executable experimentation, smoke testing, and technical
+  validation.
 - `apps/studio/angular`: current Angular implementation of the Studio
   application.
 
-An application may consume reusable packages, but reusable engine functionality
+Applications may consume reusable packages, but reusable engine functionality
 must remain owned by the appropriate package.
+
+Stable, user-facing demonstrations belong in `examples/`. Examples are
+executable consumers of public package APIs and are not owners of the
+functionality they demonstrate.
 
 ## Supported Experience Types and Edge Cases
 
-The architecture and documentation do not impose a single global project type or
-game-only paradigm. The composition model supports diverse use cases:
+The architecture and documentation do not impose a single global project type
+or game-only paradigm. The composition model supports diverse use cases:
 
 - **3D web application**: Spatial viewer, product preview, or interactive
   experience using 3D capability without game mechanics.
@@ -228,15 +235,30 @@ game-only paradigm. The composition model supports diverse use cases:
   instance, both an RPG profile and a visual novel profile) without being owned
   by or coupled to either profile.
 
-The UI architecture must preserve the same compositional principle.
+The UI architecture must preserve the same compositional principle:
 
-Generic UI primitives belong in `ui/web-components`, while Studio/editor-specific
-UI belongs in `ui/studio/angular`.
+```text
+Generic UI
+    ↓
+ui/web-components
+
+Cross-product framework UI
+    ↓
+ui/shared/<framework>
+
+Product-specific framework UI
+    ↓
+ui/<product>/<framework>
+
+Application-specific UI
+    ↓
+apps/<app>
+```
 
 ## UI and Framework Boundaries
 
-The UI architecture is intentionally split between portable primitives and
-application-specific Studio UI.
+The UI architecture is intentionally split between portable primitives,
+cross-product framework UI, product-specific UI, and application composition.
 
 ### Portable UI
 
@@ -257,20 +279,48 @@ architectural contract.
 The portable package must not depend on Angular, Angular CDK, Studio state, or
 editor-specific application behavior.
 
+### Shared UI
+
+`ui/shared/<framework>` contains UI that is genuinely shared across multiple
+products while remaining specific to a framework.
+
+Shared UI may consume portable Web Components and framework-agnostic packages
+required by its responsibilities.
+
+It must not depend on product-specific UI or application-specific code.
+
+A shared UI package should only be created when multiple products have a real
+common ownership boundary. It must not become a generic `common` package.
+
 ### Studio UI
 
-`ui/studio/angular` contains UI coupled to Studio or the editor domain and may
-use Angular-specific infrastructure such as Angular CDK and Angular Forms.
+`ui/studio/angular` contains the reusable Angular-specific UI implementation
+for Studio and may use Angular-specific infrastructure such as Angular CDK and
+Angular Forms.
 
-This package may consume the portable Web Components and framework-agnostic
-engine/editor packages.
+It may consume portable Web Components, shared Angular UI, and
+framework-agnostic engine/editor packages.
+
+This package may contain non-trivial presentation and interaction logic for
+Studio-specific components such as the Inspector, Scene Tree, Property Grid,
+Asset Browser, Dock Layout, and Command Palette.
+
+Editor domain rules and engine logic must remain in their owning
+framework-agnostic packages.
 
 ### Application
 
-`apps/studio/angular` is responsible for application composition, bootstrap,
-routing, top-level providers, configuration, and feature wiring.
+`apps/studio/angular` is the consuming Angular application for Studio.
 
-Reusable UI does not belong directly in the application shell.
+It is responsible for application bootstrap, routing, top-level providers,
+application configuration, workspace composition, feature wiring, and
+application lifecycle.
+
+It may also contain application-specific UI or features that are not intended
+to be reusable across Studio applications.
+
+Reusable Studio UI belongs in `ui/studio/angular`, while genuinely shared
+cross-product UI belongs in `ui/shared/<framework>`.
 
 ### Public Web Application
 
@@ -282,6 +332,26 @@ resources.
 
 Its implementation technology is intentionally left open until concrete
 requirements justify a decision.
+
+### Examples
+
+`examples/` contains stable, user-facing demonstrations of engine capabilities
+and supported integrations.
+
+Examples consume public package APIs but do not own reusable engine or UI
+functionality.
+
+Examples may be organized by integration or consumption model, for example:
+
+```text
+examples/
+├── engine/
+├── web-components/
+└── angular/
+```
+
+Experimental and unstable work belongs in `apps/playground` rather than in
+`examples/`.
 
 ### Integration Edge Cases
 
@@ -304,12 +374,15 @@ When introducing new functionality, follow the established repository policy:
 3. **Minimal Studio composition**: Add only the minimal local panel, tool, or
    inspector required for a concrete, verified authoring use case.
 4. **Use the appropriate UI boundary**: Place generic reusable UI primitives in
-   `ui/web-components` and Studio/editor-specific Angular UI in
+   `ui/web-components`, genuinely shared framework UI in
+   `ui/shared/<framework>`, and product-specific Studio UI in
    `ui/studio/angular`.
-5. **Extract packages deliberately**: Create a new package only when there is a
+5. **Keep application-specific behavior local**: UI or features that are
+   specific to one application should remain in `apps/<app>`.
+6. **Extract packages deliberately**: Create a new package only when there is a
    real boundary, clear ownership, and sufficient independence to justify
    separate testing, versioning, or reuse.
-6. **Add an ADR for architectural changes**: Record an Architecture Decision
+7. **Add an ADR for architectural changes**: Record an Architecture Decision
    Record in `adr/` whenever a dependency, boundary, or public architectural
    contract changes.
 
@@ -333,14 +406,16 @@ packages/
 ├── webgpu/
 └── ui/
     ├── web-components/
+    ├── shared/
+    │   └── <framework>/
     └── studio/
         └── angular/
 ```
 
 The grouping directories themselves do not automatically represent packages.
 
-A leaf package remains an independently bounded unit through its own
-`package.json`, public API, build configuration, and dependency graph.
+A leaf package remains independently bounded through its own `package.json`,
+public API, build configuration, and dependency graph.
 
 Do not create intermediate grouping directories merely to classify every
 feature, integration, or workflow.
@@ -352,6 +427,10 @@ architectural reason include:
 - `packages/integrations/`
 - `packages/studio-extensions/`
 - `packages/authoring/`
+
+`packages/ui/shared/` is also not a generic destination for arbitrary reusable
+code. A shared UI package must have real cross-product ownership and a clear
+framework boundary.
 
 The governing rule:
 
@@ -403,8 +482,11 @@ Before merging a change, verify:
 - editor state and runtime state remain distinct;
 - Studio-specific conditions do not become genre branches in engine packages;
 - portable UI remains independent from Angular and Studio;
-- Studio-specific UI remains in the Studio UI layer;
-- applications consume public package APIs rather than package internals;
+- shared UI is introduced only for genuine cross-product responsibilities;
+- product-specific UI remains in its product-specific UI package;
+- application-specific UI remains in the consuming application;
+- applications and examples consume public package APIs rather than package
+  internals;
 - the public Web application remains independent from Studio internals;
 - public exports are intentional and deep imports are avoided;
 - documentation describes implemented behavior as current and future composition
