@@ -97,7 +97,7 @@ responsibility as the project owner and developer.
 ├── adr/                         # Architecture Decision Records (ADRs)
 ├── apps/
 │   ├── docs/                   # Documentation portal boundary
-│   ├── playground/             # Graphics, runtime, experiments, and smoke testing
+│   ├── playground/             # Experiments, smoke tests, and technical validation
 │   ├── studio/
 │   │   └── angular/            # Angular Studio application
 │   └── web/                    # Public-facing project and product portal (planned)
@@ -111,6 +111,10 @@ responsibility as the project owner and developer.
 │   ├── handbook/               # Concepts, workflows, and learning material
 │   ├── reference/              # Public API contracts, schemas, and specs
 │   └── research/               # Technical investigations and benchmarks
+├── examples/                   # Stable, user-facing engine and integration examples
+│   ├── angular/                # Angular integration examples
+│   ├── engine/                 # Direct engine API examples
+│   └── web-components/         # Web Component integration examples
 ├── packages/
 │   ├── assets/                 # Asset loaders and caching
 │   ├── core/                   # Core primitives and types
@@ -118,6 +122,7 @@ responsibility as the project owner and developer.
 │   ├── renderer/               # Backend-agnostic rendering abstractions
 │   ├── runtime/                # World and ECS runtime state
 │   ├── ui/
+│   │   ├── shared/             # Cross-product UI packages when justified
 │   │   ├── studio/
 │   │   │   └── angular/        # Angular-specific reusable Studio UI
 │   │   └── web-components/     # Framework-agnostic UI primitives

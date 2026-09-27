@@ -60,7 +60,7 @@ catalogs:
     "@angular/compiler-cli": "<version>"
 ```
 
-Angular packages should reference it explicitly:
+Angular applications, libraries, and examples should reference it explicitly:
 
 ```json
 {
@@ -250,7 +250,8 @@ Angular migrations are executed as part of the update process when applicable.
 
 ### Angular and pnpm Catalogs
 
-When Angular dependencies are declared through a named catalog:
+When Angular dependencies in an application, library, or example are declared
+through a named catalog:
 
 ```json
 "@angular/core": "catalog:angular"

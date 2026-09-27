@@ -18,16 +18,22 @@ package whose architectural responsibility matches the capability:
 - `editor`: reusable headless editor state, selection models, and commands;
 - `ui/web-components`: framework-agnostic UI primitives exposed through standard
   Web Component APIs;
-- `ui/studio/angular`: Angular-specific UI coupled to Studio or the editor
-  domain;
+- `ui/shared/<framework>`: genuinely cross-product framework-specific UI;
+- `ui/<product>/<framework>`: reusable UI coupled to a specific product or
+  product domain;
 - `apps/studio/angular`: Angular application shell, composition, routing,
   bootstrap, and top-level application concerns;
 - `apps/web`: public-facing project portal and product-facing application
   composition.
 
-Do not place reusable engine or UI functionality directly inside
-`apps/studio/angular` or `apps/web` merely because an application is currently
-the first consumer.
+`apps/playground` and `examples/` are not feature owners. The playground is an
+application-level environment for experimentation, smoke testing, and technical
+validation. `examples/` contains stable, user-facing demonstrations that
+consume existing public package APIs.
+
+Do not place reusable engine or UI functionality directly inside an application,
+the playground, or an example merely because it is currently the first
+consumer.
 
 ## When to Justify a New Package
 
@@ -68,17 +74,32 @@ Portable generic UI
     ↓
 ui/web-components
 
-Studio-specific UI
+Cross-product framework UI
     ↓
-ui/studio/angular
+ui/shared/<framework>
+
+Product-specific UI
+    ↓
+ui/<product>/<framework>
 
 Application composition
     ↓
-apps/studio/angular
+apps/<app>
+
+Development validation
+    ↓
+apps/playground
+
+Stable demonstrations
+    ↓
+examples/
 ```
 
 A feature may span more than one layer, but each part should remain in the
 package that owns its responsibility.
+
+The playground and examples are consumers of those packages, not architectural
+owners of the underlying functionality.
 
 The public Web application is also an application-level consumer. It should
 compose reusable packages rather than absorb reusable engine or UI
@@ -101,21 +122,31 @@ If a capability spans both runtime and authoring:
 - Keep editor state, commands, and selection models strictly decoupled from
   runtime world state.
 
+For validation, use `apps/playground` when a focused executable experiment or
+smoke test is useful.
+
+For a stable user-facing demonstration, create or promote a focused example
+under `examples/`.
+
+An example should consume the public APIs of the owning packages rather than
+reimplementing their functionality.
+
 For example, an editor inspector should present and manipulate public editor
 or runtime contracts rather than moving engine state into an Angular component.
 
 The public Web application should not become a shortcut for placing reusable
 engine behavior outside its owning package.
 
-## 4. Decide Whether UI Is Portable or Studio-Specific
+## 4. Decide Whether UI Is Portable, Shared, Product-Specific, or
 
-When a feature requires UI, determine whether the component is generic or
-domain-specific.
+Application-Specific
+
+When a feature requires UI, determine its ownership boundary.
 
 ### Portable UI
 
 Use `ui/web-components` when the component can be understood and reused without
-Studio or editor-specific state.
+Studio, a product domain, or a framework-specific contract.
 
 Examples include generic controls such as:
 
@@ -135,12 +166,25 @@ APIs.
 Lit may be used as the implementation layer, but it must not become the public
 contract.
 
-### Studio UI
+### Shared Framework UI
 
-Use `ui/studio/angular` when the component is coupled to Studio or the editor
-domain.
+Use `ui/shared/<framework>` only when the component or interaction is genuinely
+shared across multiple products.
 
-Examples include:
+Examples might include a shared product shell, account control, or common
+navigation pattern used by multiple products.
+
+Do not create shared UI merely because two components currently look similar.
+
+The shared package must not depend on product-specific packages.
+
+### Product UI
+
+Use `ui/<product>/<framework>` when the component is coupled to a specific
+product or product domain but may be reused by multiple applications for that
+product.
+
+Examples for Studio include:
 
 - Inspector
 - Scene Tree
@@ -150,18 +194,45 @@ Examples include:
 - Command Palette
 - Node Graph
 
-Complexity alone does not determine the layer.
+For example:
 
 ```text
-complex + generic
-    → ui/web-components
-
 complex + Studio/editor-specific
     → ui/studio/angular
 ```
 
-Do not place Studio-specific reusable components directly in
-`apps/studio/angular`.
+Complexity alone does not determine the layer.
+
+### Application UI
+
+Use `apps/<app>` when the component or behavior is specific to one application
+and is not intended to be reused as part of a product UI package.
+
+For example:
+
+```text
+application-specific
+    → apps/launcher/angular/
+```
+
+Do not move application-specific UI into `ui/shared` or a product UI package
+merely because reuse might be possible later.
+
+The decision hierarchy is:
+
+```text
+generic + framework-agnostic
+    → ui/web-components
+
+shared across products + framework-specific
+    → ui/shared/<framework>
+
+specific to one product
+    → ui/<product>/<framework>
+
+specific to one application
+    → apps/<app>
+```
 
 ## 5. Integrate Framework-Specific Concerns at the Edge
 
@@ -177,13 +248,13 @@ platform (such as WebGPU, Rapier, glTF, or Web Audio) to an engine contract.
 
 The same principle applies to UI frameworks.
 
-- Angular dependencies belong in `ui/studio/angular` or
-  `apps/studio/angular`.
+- Angular dependencies belong in Angular-specific UI packages or Angular
+  applications.
 - Portable Web Components must not depend on Angular or Angular CDK.
 - Angular Forms integration should be implemented through an Angular adapter
   when required.
-- Angular CDK may be used by Studio UI without becoming a dependency of the
-  portable component package.
+- Angular CDK may be used by Studio UI or shared Angular UI without becoming a
+  dependency of the portable component package.
 - Shadow DOM boundaries should be treated as explicit integration boundaries.
 - Public Web Component events must use their DOM event contract rather than
   framework-specific event APIs.
@@ -239,10 +310,18 @@ When adding authoring capabilities:
   a single Profile can utilize multiple Workspaces.
 - **Studio UI**: Put reusable Studio-specific presentation in
   `ui/studio/angular`, not directly in `apps/studio/angular`.
+- **Shared UI**: Use `ui/shared/<framework>` only for genuinely cross-product
+  UI with clear ownership. Do not use it as a generic `common` package.
 - **Application Composition**: Use `apps/studio/angular` for bootstrap, routing,
   providers, configuration, and feature wiring.
 - **Public Web**: Use `apps/web` for public product-facing presentation and
   application composition. Keep reusable functionality in packages.
+- **Playground**: Use `apps/playground` for focused experiments, smoke tests,
+  and technical validation. Do not use it as the owner of reusable
+  functionality.
+- **Examples**: When a validated capability has a stable, meaningful
+  user-facing demonstration, place that demonstration in `examples/`. Do not
+  duplicate the same demonstration in the playground.
 - Extract a reusable editor abstraction only after a second concrete consumer
   or proven boundary demonstrates the need.
 
@@ -255,6 +334,9 @@ pnpm check
 vp run -r test
 vp run -r build
 ```
+
+Use the playground for focused executable validation when appropriate, and
+promote stable user-facing demonstrations to `examples/`.
 
 ### When to Add an ADR
 

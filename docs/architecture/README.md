@@ -37,15 +37,23 @@ rather than rewriting historical records.
   itself.
 - **Framework Independence**: Foundational engine and editor packages remain
   independent from application frameworks. Framework-specific concerns belong
-  at the application and framework-specific UI boundaries.
+  at framework-specific UI or application boundaries.
 - **Portable UI**: Generic UI primitives are exposed through framework-agnostic
-  Web Component APIs. Studio-specific UI may use Angular and Angular-specific
-  infrastructure without coupling the portable UI layer to Angular.
+  Web Component APIs and remain independent from application frameworks and
+  product-specific UI.
+- **Shared UI**: UI that is genuinely shared across multiple products may be
+  placed in a framework-specific shared UI package. Shared UI must have clear
+  cross-product ownership and must not become a generic `common` layer.
+- **Product UI**: UI that belongs to a specific product, such as Studio, may be
+  implemented in a product-specific framework package and reused by multiple
+  applications for that product.
+- **Application UI**: UI that is specific to one application remains in the
+  consuming application rather than being added to a reusable UI package.
 
 ## Package and UI Structure
 
-The repository separates framework-agnostic engine packages, portable UI, and
-Studio-specific UI:
+The repository separates framework-agnostic engine packages, portable UI,
+cross-product UI, and product-specific UI:
 
 ```text
 packages/
@@ -57,16 +65,36 @@ packages/
 ├── webgpu/
 └── ui/
     ├── web-components/
-    └── studio/
-        └── angular/
+    ├── shared/
+    │   └── <framework>/
+    └── <product>/
+        └── <framework>/
 ```
+
+For the current repository, the concrete UI structure is:
+
+```text
+packages/ui/
+├── web-components/
+└── studio/
+    └── angular/
+```
+
+A `shared/` package should only be introduced when a real cross-product UI
+responsibility exists.
 
 The UI hierarchy is organizational as well as architectural:
 
 - **`ui/web-components/`**: Framework-agnostic UI primitives exposed through
   standard Web Component APIs.
-- **`ui/studio/angular/`**: Angular-specific UI coupled to Studio or the editor
-  domain.
+- **`ui/shared/<framework>/`**: Framework-specific UI genuinely shared by
+  multiple products.
+- **`ui/<product>/<framework>/`**: Framework-specific UI coupled to a specific
+  product or product domain.
+
+Grouping directories such as `ui/`, `ui/shared/`, and `ui/<product>/` do not
+themselves represent packages unless they contain their own package
+definitions.
 
 The application layer remains separate:
 
@@ -74,12 +102,37 @@ The application layer remains separate:
 apps/
 ├── docs/
 ├── playground/
-└── studio/
-    └── angular/
+├── studio/
+│   └── angular/
+└── web/
 ```
 
-`apps/studio/angular/` owns application composition, while reusable UI belongs
-in the corresponding UI packages.
+Applications consume reusable packages and provide application-level bootstrap,
+configuration, composition, and lifecycle.
+
+For example:
+
+```text
+apps/studio/angular/
+        ↓
+ui/studio/angular/
+        ↓
+ui/web-components/
+```
+
+Application-specific UI remains in the consuming application.
+
+Stable user-facing demonstrations are maintained separately under:
+
+```text
+examples/
+├── engine/
+├── web-components/
+└── angular/
+```
+
+Examples consume public package APIs but do not own reusable engine or UI
+functionality.
 
 ## Topics
 
