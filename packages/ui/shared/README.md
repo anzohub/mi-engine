@@ -15,7 +15,8 @@ Use this directory for UI that:
 - has a clear cross-product responsibility;
 - is specific to a framework when placed under a framework-specific directory.
 
-For example:
+For example, a future shared Angular package could be consumed by the current
+Studio application and a hypothetical second product:
 
 ```text
 shared/
@@ -66,7 +67,7 @@ may be consumed by:
 
 ```text
 apps/studio/angular/
-apps/launcher/angular/
+apps/<other-product>/angular/  (hypothetical)
 ```
 
 when both applications have a concrete need for the same shared Angular UI.
@@ -182,7 +183,7 @@ Shared UI must not depend on:
 - product-specific UI packages;
 - application-specific code;
 - Studio-specific state;
-- Launcher-specific state;
+- state specific to a single product;
 - framework-specific infrastructure from another framework.
 
 For example:

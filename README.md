@@ -111,10 +111,7 @@ responsibility as the project owner and developer.
 │   ├── handbook/               # Concepts, workflows, and learning material
 │   ├── reference/              # Public API contracts, schemas, and specs
 │   └── research/               # Technical investigations and benchmarks
-├── examples/                   # Stable, user-facing engine and integration examples
-│   ├── angular/                # Angular integration examples
-│   ├── engine/                 # Direct engine API examples
-│   └── web-components/         # Web Component integration examples
+├── examples/                   # Stable demos; category directories are proposed
 ├── packages/
 │   ├── assets/                 # Asset loaders and caching
 │   ├── core/                   # Core primitives and types

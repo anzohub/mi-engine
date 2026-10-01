@@ -212,7 +212,7 @@ For example:
 
 ```text
 application-specific
-    → apps/launcher/angular/
+    → apps/<app>/
 ```
 
 Do not move application-specific UI into `ui/shared` or a product UI package
