@@ -116,7 +116,8 @@ complex + Studio/editor-specific
 ui/studio/angular/
 ```
 
-A future product-specific UI package could follow the same structure:
+A hypothetical future product-specific UI package could follow the same
+structure (this is not an existing product directory):
 
 ```text
 ui/
@@ -129,7 +130,8 @@ ui/
 UI that exists only because of a particular application should remain in the
 consuming application.
 
-For example:
+For example, a hypothetical application-specific directory (not present in
+the current repository) could be:
 
 ```text
 apps/
@@ -138,7 +140,7 @@ apps/
 ```
 
 may contain UI that is specific to that application and not intended to be
-shared by other Launcher applications.
+shared with other applications.
 
 Use the following decision order:
 
@@ -208,7 +210,7 @@ Grouping directories such as:
 packages/ui/
 packages/ui/shared/
 packages/ui/studio/
-packages/ui/launcher/
+packages/ui/<product>/
 ```
 
 do not themselves represent packages unless they contain their own package

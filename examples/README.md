@@ -6,6 +6,10 @@ demonstrate how to use and integrate mi-engine.
 Examples are intended to show real, supported usage patterns rather than
 serve as a development area for ongoing experiments.
 
+Currently, this directory contains only this README. The categories and paths
+below describe a proposed organization; they are not existing runnable
+examples.
+
 ## Purpose
 
 Use examples to demonstrate:
@@ -62,7 +66,7 @@ should first be moved into the appropriate package under `packages/`.
 Examples are organized by how the engine is consumed or by the capability
 being demonstrated.
 
-A possible structure is:
+One possible future structure is:
 
 ```text
 examples/
