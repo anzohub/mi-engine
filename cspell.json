@@ -21,6 +21,7 @@
     "devkit",
     "esbuild",
     "jsdom",
+    "lerp",
     "lmdb",
     "Lockfiles",
     "monorepo",
