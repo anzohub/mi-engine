@@ -51,9 +51,17 @@ class Vector3 {
 
     return this;
   }
+
+  subtract(vector3: Vector3Like): this {
+    this.x -= vector3.x;
+    this.y -= vector3.y;
+    this.z -= vector3.z;
+
+    return this;
+  }
 }
 
 // const newVector = new Vector3(3, 2, 3);
-// newVector.add(new Vector3(2, 2, 2));
+// newVector.subtract(new Vector3(5, 2, 2));
 
 // console.log(newVector);
