@@ -44,10 +44,12 @@ class Vector3 {
     this.z = z;
   }
 
-  add(vector3: Vector3Like): void {
+  add(vector3: Vector3Like): this {
     this.x += vector3.x;
     this.y += vector3.y;
     this.z += vector3.z;
+
+    return this;
   }
 }
 
