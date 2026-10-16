@@ -59,9 +59,25 @@ class Vector3 {
 
     return this;
   }
+
+  multiplyScalar(scalar: number): this {
+    this.x *= scalar;
+    this.y *= scalar;
+    this.z *= scalar;
+
+    return this;
+  }
+
+  divideScalar(scalar: number): this {
+    this.x /= scalar;
+    this.y /= scalar;
+    this.z /= scalar;
+
+    return this;
+  }
 }
 
-// const newVector = new Vector3(3, 2, 3);
-// newVector.subtract(new Vector3(5, 2, 2));
+// const newVector = new Vector3(6, 2, 6);
+// newVector.divideScalar(0);
 
 // console.log(newVector);
