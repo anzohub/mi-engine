@@ -34,7 +34,10 @@ Currently, no infrastructure should be assumed to exist:
 ## Architecture Terminology
 
 To ensure consistency across documentation and implementation, use these
-definitions:
+definitions within this extensibility model. Cross-cutting terms should be
+added to the [project glossary](../reference/glossary.md) once their meaning is
+validated for shared use; keep document-specific explanations here rather than
+duplicating them wholesale.
 
 ### Graphics / Spatial Capability
 

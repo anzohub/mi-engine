@@ -5,11 +5,14 @@ boundaries of the `mi-engine` packages.
 
 An arrow `A → B` means that `A` depends on `B`.
 
-## Package Dependency Graph
+## Declared and Planned Package Dependency Graph
 
-The graph below shows package-to-package dependencies. Application and example
-relationships are described separately because they represent higher-level
-consumers rather than foundational package dependencies.
+Solid arrows show package-to-package dependencies declared by current workspace
+manifests. Dashed arrows preserve the planned UI package relationships; those
+directories do not yet have package manifests and are not current workspace
+dependencies. Application and example relationships are described separately
+because they represent higher-level consumers rather than foundational package
+dependencies.
 
 ```mermaid
 %%{init: {
@@ -31,12 +34,12 @@ flowchart TB
     Runtime["@mi-engine/runtime"]
     Core["@mi-engine/core"]
 
-    StudioUI --> WebComponents
-    StudioUI --> SharedUI
-    StudioUI --> Editor
-    StudioUI --> Runtime
+    StudioUI -.-> WebComponents
+    StudioUI -.-> SharedUI
+    StudioUI -.-> Editor
+    StudioUI -.-> Runtime
 
-    SharedUI --> WebComponents
+    SharedUI -.-> WebComponents
 
     WebGPU --> Renderer
     WebGPU --> Core
@@ -50,8 +53,9 @@ flowchart TB
     Runtime --> Core
 ```
 
-`@mi-engine/ui-shared-angular` represents a potential cross-product Angular UI
-package. It should only exist when a concrete cross-product ownership boundary
+The dashed UI relationships record intended architecture, not implemented
+workspace packages or declared dependencies. A shared Angular UI package
+should only be introduced when a concrete cross-product ownership boundary
 justifies creating it.
 
 Product-specific UI packages must not depend on other product-specific UI
@@ -61,6 +65,11 @@ The Studio UI package is reusable across Studio applications, but it is not a
 generic UI package for unrelated products.
 
 ## Dependency Rules
+
+The rules below are architectural constraints for current and future work.
+They do not imply that every described package or capability has already been
+implemented. The current engine package manifests declare the dependency edges
+shown above; package source entry points remain minimal.
 
 - `runtime` depends on `core`.
 - `renderer` depends on `core`.
