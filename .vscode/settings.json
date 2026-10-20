@@ -9,9 +9,5 @@
   "stylelint.validate": ["css"],
   "css.validate": false,
 
-  "cSpell.language": "en",
-
-  "[typescript]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
-  }
+  "cSpell.language": "en"
 }
