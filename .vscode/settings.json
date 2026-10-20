@@ -11,7 +11,6 @@
 
   "cSpell.language": "en",
 
-  "explorer.excludeGitIgnore": true,
   "[typescript]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   }
