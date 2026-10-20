@@ -1,0 +1,19 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPointStrategy": "packages",
+  "entryPoints": [
+    "packages/assets",
+    "packages/core",
+    "packages/editor",
+    "packages/renderer",
+    "packages/runtime",
+    "packages/webgpu"
+  ],
+  "packageOptions": {
+    "entryPoints": ["src/index.ts"],
+    "tsconfig": "tsconfig.json",
+    "readme": "none"
+  },
+  "out": "dist/api",
+  "readme": "none"
+}

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vp run --filter @mi-engine/studio start",
+    "docs:api": "typedoc --options typedoc.json",
     "ready": "pnpm check && vp run -r test && vp run -r build",
     "prepare": "vp config",
     "check": "pnpm lint && vp check --no-lint",
@@ -18,6 +19,8 @@
     "markdownlint-cli": "catalog:",
     "stylelint": "catalog:",
     "stylelint-config-standard": "catalog:",
+    "typedoc": "catalog:",
+    "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
