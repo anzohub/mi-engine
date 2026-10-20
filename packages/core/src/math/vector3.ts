@@ -31,9 +31,9 @@
  * - lerp(vector, alpha): Interpolates between this vector and another vector by the given factor.
  */
 
-type Vector3Like = Readonly<Pick<Vector3, "x" | "y" | "z">>;
+export type Vector3Like = Readonly<Pick<Vector3, "x" | "y" | "z">>;
 
-class Vector3 {
+export class Vector3 {
   public x: number;
   public y: number;
   public z: number;
@@ -68,6 +68,16 @@ class Vector3 {
     return this;
   }
 
+  /**
+   * Divides each component of this vector by a scalar, modifying this vector.
+   *
+   * @param scalar - The divisor applied to each component.
+   * @returns This vector, allowing method chaining.
+   *
+   * @remarks
+   * A zero divisor is not handled specially. The resulting components follow
+   * JavaScript's numeric arithmetic and may be `NaN` or infinite.
+   */
   divideScalar(scalar: number): this {
     this.x /= scalar;
     this.y /= scalar;

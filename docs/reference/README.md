@@ -67,6 +67,13 @@ output is ignored by Git and must be regenerated rather than edited manually.
 The TypeDoc version is pinned in the shared pnpm catalog and installed as a
 root development dependency alongside the shared TypeScript version.
 
+Open `dist/api/index.html` in your browser to view the generated reference.
+On Linux, you can run this command from the repository root:
+
+```bash
+xdg-open dist/api/index.html
+```
+
 The Markdown files in `docs/` remain the canonical authored documentation.
 The future portal in `apps/docs` can integrate the generated API alongside
 that content. TypeDoc's default output is HTML, not Markdown; adding Markdown

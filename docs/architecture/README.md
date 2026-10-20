@@ -29,7 +29,7 @@ The following facts are verifiable in the workspace manifests and source:
 - Engine packages have separate manifests and root exports. Current declared
   dependencies point from `runtime`, `renderer`, and `assets` to `core`, from
   `editor` to `core` and `runtime`, and from `webgpu` to `core` and `renderer`.
-- The package entry points currently export version symbols.
+- Package entry points define public contracts through explicit exports.
 - The Angular Studio application exists under `apps/studio/angular`. The
   directories under `packages/ui/` are organizational documentation
   boundaries, not currently declared workspace packages with package

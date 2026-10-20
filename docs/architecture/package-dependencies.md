@@ -85,9 +85,8 @@ shown above; package source entry points remain minimal.
   responsibilities.
 - Product-specific UI packages must not depend on unrelated product-specific
   UI packages.
-- The package source is currently a minimal version surface. Runtime, renderer,
-  asset, editor, and UI capabilities will be added behind these existing
-  boundaries as their implementation becomes real.
+- Runtime, rendering, asset, editor, and UI capabilities belong within their
+  owning package boundaries and are exposed through deliberate public exports.
 - `renderer` must not depend on `webgpu`.
 - `core` and `runtime` remain independent of Angular, the DOM, and concrete
   rendering implementations.

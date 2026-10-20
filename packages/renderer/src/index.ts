@@ -1,3 +1,2 @@
-import { VERSION } from "@mi-engine/core";
-
-export const RENDERER_VERSION = VERSION;
+// oxlint-disable-next-line unicorn/require-module-specifiers -- Temporary entry point until the package exposes a public API.
+export {};

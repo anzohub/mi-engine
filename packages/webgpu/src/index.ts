@@ -1,4 +1,2 @@
-import { VERSION } from "@mi-engine/core";
-import { RENDERER_VERSION } from "@mi-engine/renderer";
-
-export const WEBGPU_BACKEND_VERSION = `${RENDERER_VERSION}-${VERSION}`;
+// oxlint-disable-next-line unicorn/require-module-specifiers -- Temporary entry point until the package exposes a public API.
+export {};

@@ -8,9 +8,9 @@ architectural rules that guide future work.
 
 ## Current State
 
-The repository currently contains the package boundaries and TypeScript
-workspace configuration, but the engine packages expose only minimal version
-symbols. There is no implemented plugin registry, persistence schema, frame
+The repository defines package boundaries and a shared TypeScript workspace
+configuration. Engine packages expose public contracts through their entry
+points. There is no implemented plugin registry, persistence schema, frame
 pipeline, command model, inspector API, panel API, or authoring-profile API.
 
 The current Studio application is an Angular application under

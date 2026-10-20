@@ -1,1 +1,2 @@
-export const VERSION = "0.0.0";
+export { Vector3 } from "./math/vector3.ts";
+export type { Vector3Like } from "./math/vector3.ts";
