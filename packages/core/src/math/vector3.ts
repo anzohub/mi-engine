@@ -3,7 +3,8 @@
  *
  * Initialization and Assignment
  * - constructor(x = 0, y = 0, z = 0): Creates a vector with the given components.
- * - set(vector3): Sets the components from a vector-like object.
+ * - set(x, y, z): Sets the components from numeric values.
+ * - copy(vector3): Sets the components from a vector-like object.
  * - clone(): Creates a new vector with the same components.
  *
  * Arithmetic Operations
@@ -57,13 +58,28 @@ export class Vector3 {
     this.z = z;
   }
 
-  /** Sets this vector's components from a vector-like object.
+  /** Sets this vector's components from numeric values.
+   *
+   * @param x - The x component.
+   * @param y - The y component.
+   * @param z - The z component.
+   * @returns This vector, allowing method chaining.
+   */
+  set(x: number, y: number, z: number): this {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+
+    return this;
+  }
+
+  /** Copies the components from a vector-like object into this vector.
    *
    * @param vector3 - An object with numeric x, y, and z components.
    * @returns This vector, allowing method chaining.
    * @remarks The object does not need to be a Vector3 instance.
    */
-  set(vector3: Vector3Like): this {
+  copy(vector3: Vector3Like): this {
     this.x = vector3.x;
     this.y = vector3.y;
     this.z = vector3.z;
