@@ -87,6 +87,14 @@ export class Vector3 {
     return this;
   }
 
+  /** Creates an independent vector with the same components as this one.
+   *
+   * @returns A new vector with the same x, y, and z components.
+   */
+  clone(): Vector3 {
+    return new Vector3(this.x, this.y, this.z);
+  }
+
   /** Adds another vector to this one, modifying its components.
    *
    * @param vector3 - The vector to add.
