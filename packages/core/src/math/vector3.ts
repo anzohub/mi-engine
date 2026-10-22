@@ -1,10 +1,9 @@
 /*
  * Vector3 — Initial Methods
  *
- * Initialization and Copying
+ * Initialization and Assignment
  * - constructor(x = 0, y = 0, z = 0): Creates a vector with the given components.
- * - set(x, y, z): Sets the vector's components.
- * - copy(vector): Copies another vector's components into this vector.
+ * - set(vector3): Sets the components from a vector-like object.
  * - clone(): Creates a new vector with the same components.
  *
  * Arithmetic Operations
@@ -33,17 +32,50 @@
 
 export type Vector3Like = Readonly<Pick<Vector3, "x" | "y" | "z">>;
 
+/**
+ * Represents a three-component vector used for positions, directions, scales,
+ * and other values in 3D space.
+ *
+ * Methods that modify its components update the current instance and return
+ * `this`, allowing calls to be chained.
+ */
 export class Vector3 {
   public x: number;
   public y: number;
   public z: number;
 
+  /**
+   * Creates a vector from its components, which default to zero.
+   *
+   * @param x - The x component.
+   * @param y - The y component.
+   * @param z - The z component.
+   */
   constructor(x: number = 0, y: number = 0, z: number = 0) {
     this.x = x;
     this.y = y;
     this.z = z;
   }
 
+  /** Sets this vector's components from a vector-like object.
+   *
+   * @param vector3 - An object with numeric x, y, and z components.
+   * @returns This vector, allowing method chaining.
+   * @remarks The object does not need to be a Vector3 instance.
+   */
+  set(vector3: Vector3Like): this {
+    this.x = vector3.x;
+    this.y = vector3.y;
+    this.z = vector3.z;
+
+    return this;
+  }
+
+  /** Adds another vector to this one, modifying its components.
+   *
+   * @param vector3 - The vector to add.
+   * @returns This vector, allowing method chaining.
+   */
   add(vector3: Vector3Like): this {
     this.x += vector3.x;
     this.y += vector3.y;
@@ -52,6 +84,11 @@ export class Vector3 {
     return this;
   }
 
+  /** Subtracts another vector from this one, modifying its components.
+   *
+   * @param vector3 - The vector to subtract.
+   * @returns This vector, allowing method chaining.
+   */
   subtract(vector3: Vector3Like): this {
     this.x -= vector3.x;
     this.y -= vector3.y;
@@ -60,6 +97,11 @@ export class Vector3 {
     return this;
   }
 
+  /** Multiplies each component by a scalar, modifying this vector.
+   *
+   * @param scalar - The factor applied to each component.
+   * @returns This vector, allowing method chaining.
+   */
   multiplyScalar(scalar: number): this {
     this.x *= scalar;
     this.y *= scalar;
