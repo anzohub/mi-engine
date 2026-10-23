@@ -165,9 +165,27 @@ export class Vector3 {
 
     return x + y + z;
   }
+
+  /**
+   * Computes the cross product of this vector and another vector, updating this vector with the result.
+   *
+   * @param vector3 - The vector to calculate the cross product with.
+   * @returns This vector, allowing method chaining.
+   */
+  cross(vector3: Vector3Like): this {
+    const x = this.y * vector3.z - this.z * vector3.y;
+    const y = this.z * vector3.x - this.x * vector3.z;
+    const z = this.x * vector3.y - this.y * vector3.x;
+
+    this.x = x;
+    this.y = y;
+    this.z = z;
+
+    return this;
+  }
 }
 
-// const a = new Vector3(1, 0, 0);
-// const b = new Vector3(0, 1, 0);
+// const a = new Vector3(2, 0, 0);
+// const b = new Vector3(3, 0, 0);
 
-// console.log(a.dot(b));
+// console.log(a.cross(b));
