@@ -151,9 +151,23 @@ export class Vector3 {
 
     return this;
   }
+
+  /**
+   * Computes the dot product of this vector and another vector.
+   *
+   * @param vector3 - The vector to calculate the dot product with.
+   * @returns The dot product of the two vectors.
+   */
+  dot(vector3: Vector3Like): number {
+    const x = this.x * vector3.x;
+    const y = this.y * vector3.y;
+    const z = this.z * vector3.z;
+
+    return x + y + z;
+  }
 }
 
-// const newVector = new Vector3(6, 2, 6);
-// newVector.divideScalar(0);
+// const a = new Vector3(1, 0, 0);
+// const b = new Vector3(0, 1, 0);
 
-// console.log(newVector);
+// console.log(a.dot(b));
