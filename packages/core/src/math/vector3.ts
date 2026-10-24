@@ -183,9 +183,19 @@ export class Vector3 {
 
     return this;
   }
+
+  /**
+   * Calculates the magnitude of this vector.
+   *
+   * @returns The length of this vector.
+   */
+  length(): number {
+    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+  }
 }
 
-// const a = new Vector3(2, 0, 0);
+const a = new Vector3(-3, 4, 0);
 // const b = new Vector3(3, 0, 0);
 
 // console.log(a.cross(b));
+console.log(a.length());
