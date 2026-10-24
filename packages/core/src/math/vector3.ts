@@ -34,11 +34,26 @@
 export type Vector3Like = Readonly<Pick<Vector3, "x" | "y" | "z">>;
 
 /**
- * Represents a three-component vector used for positions, directions, scales,
- * and other values in 3D space.
+ * Represents a three-dimensional vector with x, y, and z components.
  *
- * Methods that modify its components update the current instance and return
- * `this`, allowing calls to be chained.
+ * Vectors can represent positions, directions, scales, displacements,
+ * and other three-dimensional values, depending on the context.
+ *
+ * Methods that modify this vector update its components in place and return
+ * `this`, allowing method chaining. Methods that calculate measurements or
+ * compare values return their result without modifying this vector.
+ *
+ * Use `clone()` to create an independent copy when you need to preserve
+ * the original vector before applying modifying operations.
+ *
+ * @example
+ * const position = new Vector3(1, 2, 3);
+ * const offset = new Vector3(0, 0, -5);
+ *
+ * position.add(offset);
+ * // position is now (1, 2, -2)
+ *
+ * const distance = position.length();
  */
 export class Vector3 {
   public x: number;
