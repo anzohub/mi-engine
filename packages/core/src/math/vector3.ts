@@ -31,6 +31,11 @@
  * - lerp(vector, alpha): Interpolates between this vector and another vector by the given factor.
  */
 
+/**
+ * Represents a read-only object with x, y, and z components compatible with a Vector3.
+ *
+ * Allows methods to accept vector-like objects without requiring a Vector3 instance.
+ */
 export type Vector3Like = Readonly<Pick<Vector3, "x" | "y" | "z">>;
 
 /**
