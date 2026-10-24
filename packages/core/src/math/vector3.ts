@@ -192,10 +192,19 @@ export class Vector3 {
   length(): number {
     return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
   }
+
+  /**
+   * Calculates the squared magnitude of this vector.
+   *
+   * @returns The squared length of this vector.
+   */
+  lengthSquared(): number {
+    return this.x * this.x + this.y * this.y + this.z * this.z;
+  }
 }
 
 const a = new Vector3(-3, 4, 0);
 // const b = new Vector3(3, 0, 0);
 
 // console.log(a.cross(b));
-console.log(a.length());
+console.log(a.lengthSquared());
