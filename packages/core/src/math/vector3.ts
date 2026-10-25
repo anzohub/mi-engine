@@ -260,6 +260,16 @@ export class Vector3 {
 
     return x * x + y * y + z * z;
   }
+
+  /**
+   * Checks whether this vector has the same components as another vector.
+   *
+   * @param vector3 - The vector to compare with.
+   * @returns `true` if all components are equal; otherwise, `false`.
+   */
+  equals(vector3: Vector3Like): boolean {
+    return this.x === vector3.x && this.y === vector3.y && this.z === vector3.z;
+  }
 }
 
 const a = new Vector3(3, 4, 0);
