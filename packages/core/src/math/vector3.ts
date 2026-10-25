@@ -236,10 +236,34 @@ export class Vector3 {
 
     return this.divideScalar(length);
   }
+
+  /**
+   * Calculates the distance between this vector and another vector.
+   *
+   * @param vector3 - The vector to measure the distance to.
+   * @returns The distance between the two vectors.
+   */
+  distanceTo(vector3: Vector3Like): number {
+    return Math.sqrt(this.distanceToSquared(vector3));
+  }
+
+  /**
+   * Calculates the squared distance between this vector and another vector.
+   *
+   * @param vector3 - The vector to calculate the squared distance to.
+   * @returns The squared distance between the two vectors.
+   */
+  distanceToSquared(vector3: Vector3Like): number {
+    const x = vector3.x - this.x;
+    const y = vector3.y - this.y;
+    const z = vector3.z - this.z;
+
+    return x * x + y * y + z * z;
+  }
 }
 
 const a = new Vector3(3, 4, 0);
-// const b = new Vector3(3, 0, 0);
+const b = new Vector3(3, 0, 0);
 
 // console.log(a.cross(b));
-console.log(a.normalize());
+console.log(a.distanceToSquared(b));
