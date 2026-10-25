@@ -221,10 +221,25 @@ export class Vector3 {
   lengthSquared(): number {
     return this.x * this.x + this.y * this.y + this.z * this.z;
   }
+
+  /**
+   * Normalizes this vector to unit length.
+   *
+   * If this vector has zero length, it remains unchanged.
+   *
+   * @returns This vector, allowing method chaining.
+   */
+  normalize(): this {
+    const length = this.length();
+
+    if (length === 0) return this;
+
+    return this.divideScalar(length);
+  }
 }
 
-const a = new Vector3(-3, 4, 0);
+const a = new Vector3(3, 4, 0);
 // const b = new Vector3(3, 0, 0);
 
 // console.log(a.cross(b));
-console.log(a.lengthSquared());
+console.log(a.normalize());
