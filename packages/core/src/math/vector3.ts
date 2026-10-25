@@ -1,36 +1,3 @@
-/*
- * Vector3 — Initial Methods
- *
- * Initialization and Assignment
- * - constructor(x = 0, y = 0, z = 0): Creates a vector with the given components.
- * - set(x, y, z): Sets the components from numeric values.
- * - copy(vector3): Sets the components from a vector-like object.
- * - clone(): Creates a new vector with the same components.
- *
- * Arithmetic Operations
- * - add(vector): Adds another vector to this vector.
- * - subtract(vector): Subtracts another vector from this vector.
- * - multiplyScalar(scalar): Multiplies each component by a scalar.
- * - divideScalar(scalar): Divides each component by a scalar.
- *
- * Vector Products
- * - dot(vector): Calculates the dot product of this vector and another vector.
- * - cross(vector): Calculates the cross product of this vector and another vector.
- *
- * Magnitude and Normalization
- * - length(): Returns the vector's magnitude.
- * - lengthSquared(): Returns the square of the vector's magnitude.
- * - normalize(): Scales the vector to have a magnitude of one.
- *
- * Distance
- * - distanceTo(vector): Returns the distance between this vector and another vector.
- * - distanceToSquared(vector): Returns the squared distance between two vectors.
- *
- * Comparison and Interpolation
- * - equals(vector): Checks whether this vector has the same components as another vector.
- * - lerp(vector, alpha): Interpolates between this vector and another vector by the given factor.
- */
-
 /**
  * Represents a read-only object with x, y, and z components compatible with a Vector3.
  *
@@ -270,10 +237,21 @@ export class Vector3 {
   equals(vector3: Vector3Like): boolean {
     return this.x === vector3.x && this.y === vector3.y && this.z === vector3.z;
   }
+
+  /**
+   * Linearly interpolates this vector toward another vector.
+   *
+   * @param vector3 - The target vector.
+   * @param alpha - The interpolation factor, typically between 0 and 1.
+   *                0 keeps this vector unchanged; 1 sets it to the target.
+   *                Values outside this range extrapolate beyond the target.
+   * @returns This vector, allowing method chaining.
+   */
+  lerp(vector3: Vector3Like, alpha: number): this {
+    this.x += (vector3.x - this.x) * alpha;
+    this.y += (vector3.y - this.y) * alpha;
+    this.z += (vector3.z - this.z) * alpha;
+
+    return this;
+  }
 }
-
-const a = new Vector3(3, 4, 0);
-const b = new Vector3(3, 0, 0);
-
-// console.log(a.cross(b));
-console.log(a.distanceToSquared(b));
