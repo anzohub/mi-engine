@@ -83,13 +83,12 @@ Project documentation is organized by purpose:
 
 AI use is intentionally limited within the project.
 
-AI may be used for boilerplate generation, mechanical or repetitive tasks,
-and other low-risk activities where it does not replace architectural
-reasoning, design decisions, implementation understanding, or
-project-specific expertise.
+AI may be used for boilerplate generation, mechanical or repetitive tasks, and
+other low-risk activities, provided that it does not replace architectural
+reasoning, design decisions, implementation understanding, or project-specific expertise.
 
-Architecture, design, implementation, and verification remain my
-responsibility as the project owner and developer.
+Architecture, design, implementation, and verification remain the responsibility
+of the project owner and developer.
 
 ## Project Structure
 
