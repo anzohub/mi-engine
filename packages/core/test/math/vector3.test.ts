@@ -27,4 +27,11 @@ describe("Vector3", () => {
     expect(vector.y).toBe(-2);
     expect(vector.z).toBe(7);
   });
+
+  it("returns the current vector instance", () => {
+    const vector = new Vector3(1, 2, 3);
+    const result = vector.set(4, -2, 7);
+
+    expect(vector).toBe(result);
+  });
 });
