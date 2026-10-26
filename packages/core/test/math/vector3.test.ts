@@ -9,4 +9,12 @@ describe("Vector3", () => {
     expect(vector.y).toBe(0);
     expect(vector.z).toBe(0);
   });
+
+  it("initializes components with the provided values", () => {
+    const vector = new Vector3(2, -3, 5);
+
+    expect(vector.x).toBe(2);
+    expect(vector.y).toBe(-3);
+    expect(vector.z).toBe(5);
+  });
 });
