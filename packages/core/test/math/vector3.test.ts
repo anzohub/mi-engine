@@ -17,4 +17,14 @@ describe("Vector3", () => {
     expect(vector.y).toBe(-3);
     expect(vector.z).toBe(5);
   });
+
+  it("sets components to the provided values", () => {
+    const vector = new Vector3(1, 2, 3);
+
+    vector.set(4, -2, 7);
+
+    expect(vector.x).toBe(4);
+    expect(vector.y).toBe(-2);
+    expect(vector.z).toBe(7);
+  });
 });
