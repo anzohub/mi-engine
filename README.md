@@ -93,7 +93,7 @@ of the project owner and developer.
 ## Project Structure
 
 ```text
-├── adr/                         # Architecture Decision Records (ADRs)
+├── adr/                        # Architecture Decision Records (ADRs)
 ├── apps/
 │   ├── docs/                   # Documentation portal boundary
 │   ├── playground/             # Experiments, smoke tests, and technical validation
