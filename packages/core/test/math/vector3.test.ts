@@ -53,14 +53,14 @@ describe("copy()", () => {
 
 describe("clone()", () => {
   it("creates an independent copy with the same components", () => {
-    const vector = new Vector3(4, -2, 7);
-    const result = vector.clone();
+    const original = new Vector3(4, -2, 7);
+    const clone = original.clone();
 
-    expect(vector).not.toBe(result);
+    expect(original).not.toBe(clone);
 
-    expect(result.x).toBe(4);
-    expect(result.y).toBe(-2);
-    expect(result.z).toBe(7);
+    expect(clone.x).toBe(4);
+    expect(clone.y).toBe(-2);
+    expect(clone.z).toBe(7);
   });
 
   it("does not modify the original when the clone is changed", () => {
