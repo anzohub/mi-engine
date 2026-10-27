@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import { Vector3 } from "../../src/math/vector3.ts";
 
-describe("Vector3", () => {
+describe("constructor", () => {
   it("initializes components to zero by default", () => {
     const vector = new Vector3();
 
@@ -17,7 +17,9 @@ describe("Vector3", () => {
     expect(vector.y).toBe(-3);
     expect(vector.z).toBe(5);
   });
+});
 
+describe("set()", () => {
   it("sets components to the provided values", () => {
     const vector = new Vector3(1, 2, 3);
 
@@ -34,7 +36,9 @@ describe("Vector3", () => {
 
     expect(vector).toBe(result);
   });
+});
 
+describe("copy()", () => {
   it("copies components from another vector", () => {
     const source = new Vector3(4, -2, 7);
     const target = new Vector3(1, 2, 3);
@@ -44,5 +48,29 @@ describe("Vector3", () => {
     expect(target.x).toBe(4);
     expect(target.y).toBe(-2);
     expect(target.z).toBe(7);
+  });
+});
+
+describe("clone()", () => {
+  it("creates an independent copy with the same components", () => {
+    const vector = new Vector3(4, -2, 7);
+    const result = vector.clone();
+
+    expect(vector).not.toBe(result);
+
+    expect(result.x).toBe(4);
+    expect(result.y).toBe(-2);
+    expect(result.z).toBe(7);
+  });
+
+  it("does not modify the original when the clone is changed", () => {
+    const original = new Vector3(4, -2, 7);
+    const clone = original.clone();
+
+    clone.set(1, 2, 3);
+
+    expect(original.x).toBe(4);
+    expect(original.y).toBe(-2);
+    expect(original.z).toBe(7);
   });
 });
