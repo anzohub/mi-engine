@@ -1,11 +1,7 @@
 # Logs
 logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
 # Dependencies & Package Managers
 node_modules
@@ -42,7 +38,6 @@ playwright/.auth/
 !.env.example
 
 # Tool Caches
-.eslintcache
 .stylelintcache
 .angular/
 
@@ -63,12 +58,6 @@ playwright/.auth/
 *.sw?
 *.swp
 *~
-
-# AI Assistants
-.ai/
-.junie/
-.claude/worktrees/
-AGENTS.md
 
 # OS
 .DS_Store
