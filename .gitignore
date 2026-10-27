@@ -53,10 +53,6 @@ playwright/.auth/
 !.vscode/tasks.json
 !.vscode/launch.json
 
-# JetBrains / WebStorm
-.idea
-http-client.private.env.json
-
 # Visual Studio
 *.suo
 *.ntvs*
