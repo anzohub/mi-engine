@@ -34,4 +34,15 @@ describe("Vector3", () => {
 
     expect(vector).toBe(result);
   });
+
+  it("copies components from another vector", () => {
+    const source = new Vector3(4, -2, 7);
+    const target = new Vector3(1, 2, 3);
+
+    target.copy(source);
+
+    expect(target.x).toBe(4);
+    expect(target.y).toBe(-2);
+    expect(target.z).toBe(7);
+  });
 });
