@@ -74,3 +74,16 @@ describe("clone()", () => {
     expect(original.z).toBe(7);
   });
 });
+
+describe("add()", () => {
+  it("adds another vector to this vector", () => {
+    const vector = new Vector3(4, -2, 7);
+    const vectorToAdd = new Vector3(1, 2, 3);
+
+    vector.add(vectorToAdd);
+
+    expect(vector.x).toBe(5);
+    expect(vector.y).toBe(0);
+    expect(vector.z).toBe(10);
+  });
+});
