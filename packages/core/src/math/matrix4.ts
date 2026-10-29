@@ -24,9 +24,25 @@ export class Matrix4 {
 
   constructor() {
     this.elements = new Float32Array(16);
+    this.identity();
+  }
+
+  identity(): this {
+    this.elements.fill(0);
+
+    this.elements[0] = 1;
+    this.elements[5] = 1;
+    this.elements[10] = 1;
+    this.elements[15] = 1;
+
+    return this;
   }
 }
 
 // const matrix4 = new Matrix4();
 
-// console.log(matrix4);
+// const rows = Array.from({ length: 4 }, (_rowValue, row) =>
+//   Array.from({ length: 4 }, (_columnValue, column) => matrix4.elements[column * 4 + row]),
+// );
+
+// console.table(rows);
