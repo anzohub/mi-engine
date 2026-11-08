@@ -20,26 +20,14 @@
  */
 
 /**
- * Represents a read-only object exposing numeric elements compatible with a Matrix4.
- *
- * Allows matrix operations to read elements without requiring a Matrix4 instance.
- *
- * @remarks
- * This type defines a Matrix4-specific compatibility contract. A shared
- * deep-readonly utility can be considered if the same pattern becomes common
- * across multiple core types.
- */
-export type Matrix4Like = Readonly<{ elements: ArrayLike<number> }>;
-
-/**
  * Represents a four-by-four matrix used to express three-dimensional transformations.
  *
  * The 16 elements are stored in a Float32Array using column-major order.
  * Methods that modify this matrix update its elements in place and return
  * `this`, allowing method chaining.
  *
- * Use `identity()` to reset the matrix to the identity matrix and `copy()`
- * to copy the elements of another compatible matrix.
+ * Use `identity()` to reset the matrix to the identity matrix,
+ * `copy()` to copy another matrix and `clone()` to create an independent copy.
  *
  * @example
  * const matrix = new Matrix4();
@@ -81,19 +69,14 @@ export class Matrix4 {
   /**
    * Copies the elements of another matrix into this matrix.
    *
-   * @param matrix4 - A matrix-compatible object containing exactly 16 elements.
+   * @param matrix4 - The source matrix.
    * @returns This matrix, allowing method chaining.
-   * @throws {RangeError} If the source does not contain exactly 16 elements.
    *
    * @remarks
    * The source matrix is not modified. The existing elements array of this
    * matrix is preserved.
    */
-  copy(matrix4: Matrix4Like): this {
-    if (matrix4.elements.length !== this.elements.length) {
-      throw new RangeError("Matrix4 source must contain exactly 16 elements.");
-    }
-
+  copy(matrix4: Matrix4): this {
     this.elements.set(matrix4.elements);
 
     return this;
@@ -106,5 +89,102 @@ export class Matrix4 {
    */
   clone(): Matrix4 {
     return new Matrix4().copy(this);
+  }
+
+  /**
+   * Multiplies this matrix by another 4x4 matrix (this = this * matrix4).
+   *
+   * @param matrix4 - The matrix to multiply with.
+   * @returns This matrix, allowing method chaining.
+   *
+   * @remarks
+   * This operation updates this matrix in place.
+   * The input elements are cached before writing the result, allowing
+   * multiplication with the same matrix instance.
+   */
+  // Intentionally unrolled to keep the fixed-size 4x4 operation explicit.
+  // oxlint-disable-next-line max-lines-per-function typescript/prefer-readonly-parameter-types
+  multiply(matrix4: Matrix4): this {
+    const a11 = this.elements[0]!;
+    const a12 = this.elements[4]!;
+    const a13 = this.elements[8]!;
+    const a14 = this.elements[12]!;
+
+    const a21 = this.elements[1]!;
+    const a22 = this.elements[5]!;
+    const a23 = this.elements[9]!;
+    const a24 = this.elements[13]!;
+
+    const a31 = this.elements[2]!;
+    const a32 = this.elements[6]!;
+    const a33 = this.elements[10]!;
+    const a34 = this.elements[14]!;
+
+    const a41 = this.elements[3]!;
+    const a42 = this.elements[7]!;
+    const a43 = this.elements[11]!;
+    const a44 = this.elements[15]!;
+
+    const b11 = matrix4.elements[0]!;
+    const b12 = matrix4.elements[4]!;
+    const b13 = matrix4.elements[8]!;
+    const b14 = matrix4.elements[12]!;
+
+    const b21 = matrix4.elements[1]!;
+    const b22 = matrix4.elements[5]!;
+    const b23 = matrix4.elements[9]!;
+    const b24 = matrix4.elements[13]!;
+
+    const b31 = matrix4.elements[2]!;
+    const b32 = matrix4.elements[6]!;
+    const b33 = matrix4.elements[10]!;
+    const b34 = matrix4.elements[14]!;
+
+    const b41 = matrix4.elements[3]!;
+    const b42 = matrix4.elements[7]!;
+    const b43 = matrix4.elements[11]!;
+    const b44 = matrix4.elements[15]!;
+
+    const c11 = a11 * b11 + a12 * b21 + a13 * b31 + a14 * b41;
+    const c12 = a11 * b12 + a12 * b22 + a13 * b32 + a14 * b42;
+    const c13 = a11 * b13 + a12 * b23 + a13 * b33 + a14 * b43;
+    const c14 = a11 * b14 + a12 * b24 + a13 * b34 + a14 * b44;
+
+    const c21 = a21 * b11 + a22 * b21 + a23 * b31 + a24 * b41;
+    const c22 = a21 * b12 + a22 * b22 + a23 * b32 + a24 * b42;
+    const c23 = a21 * b13 + a22 * b23 + a23 * b33 + a24 * b43;
+    const c24 = a21 * b14 + a22 * b24 + a23 * b34 + a24 * b44;
+
+    const c31 = a31 * b11 + a32 * b21 + a33 * b31 + a34 * b41;
+    const c32 = a31 * b12 + a32 * b22 + a33 * b32 + a34 * b42;
+    const c33 = a31 * b13 + a32 * b23 + a33 * b33 + a34 * b43;
+    const c34 = a31 * b14 + a32 * b24 + a33 * b34 + a34 * b44;
+
+    const c41 = a41 * b11 + a42 * b21 + a43 * b31 + a44 * b41;
+    const c42 = a41 * b12 + a42 * b22 + a43 * b32 + a44 * b42;
+    const c43 = a41 * b13 + a42 * b23 + a43 * b33 + a44 * b43;
+    const c44 = a41 * b14 + a42 * b24 + a43 * b34 + a44 * b44;
+
+    this.elements[0] = c11;
+    this.elements[1] = c21;
+    this.elements[2] = c31;
+    this.elements[3] = c41;
+
+    this.elements[4] = c12;
+    this.elements[5] = c22;
+    this.elements[6] = c32;
+    this.elements[7] = c42;
+
+    this.elements[8] = c13;
+    this.elements[9] = c23;
+    this.elements[10] = c33;
+    this.elements[11] = c43;
+
+    this.elements[12] = c14;
+    this.elements[13] = c24;
+    this.elements[14] = c34;
+    this.elements[15] = c44;
+
+    return this;
   }
 }
