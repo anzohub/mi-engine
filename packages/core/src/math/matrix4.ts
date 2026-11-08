@@ -20,6 +20,19 @@
  */
 
 /**
+ * Represents a read-only view of a Matrix4-compatible data source.
+ *
+ * Allows matrix operations to read elements without requiring a Matrix4 instance.
+ *
+ * @remarks
+ * The source must contain exactly 16 numeric elements in column-major order.
+ * The caller is responsible for providing a valid matrix.
+ */
+export type Matrix4Like = Readonly<{
+  elements: ArrayLike<number>;
+}>;
+
+/**
  * Represents a four-by-four matrix used to express three-dimensional transformations.
  *
  * The 16 elements are stored in a Float32Array using column-major order.
@@ -34,7 +47,7 @@
  *
  * // The matrix is initialized to the identity matrix.
  */
-export class Matrix4 {
+export class Matrix4 implements Matrix4Like {
   /**
    * Stores the 16 matrix elements in column-major order.
    *
@@ -69,14 +82,14 @@ export class Matrix4 {
   /**
    * Copies the elements of another matrix into this matrix.
    *
-   * @param matrix4 - The source matrix.
+   * @param matrix4 - A matrix-compatible object containing exactly 16 elements.
    * @returns This matrix, allowing method chaining.
    *
    * @remarks
    * The source matrix is not modified. The existing elements array of this
    * matrix is preserved.
    */
-  copy(matrix4: Matrix4): this {
+  copy(matrix4: Matrix4Like): this {
     this.elements.set(matrix4.elements);
 
     return this;
@@ -94,7 +107,7 @@ export class Matrix4 {
   /**
    * Multiplies this matrix by another 4x4 matrix (this = this * matrix4).
    *
-   * @param matrix4 - The matrix to multiply with.
+   * @param matrix4 - A matrix-compatible object containing exactly 16 elements.
    * @returns This matrix, allowing method chaining.
    *
    * @remarks
@@ -103,8 +116,8 @@ export class Matrix4 {
    * multiplication with the same matrix instance.
    */
   // Intentionally unrolled to keep the fixed-size 4x4 operation explicit.
-  // oxlint-disable-next-line max-lines-per-function typescript/prefer-readonly-parameter-types
-  multiply(matrix4: Matrix4): this {
+  // oxlint-disable-next-line max-lines-per-function
+  multiply(matrix4: Matrix4Like): this {
     const a11 = this.elements[0]!;
     const a12 = this.elements[4]!;
     const a13 = this.elements[8]!;
