@@ -29,9 +29,7 @@
  * deep-readonly utility can be considered if the same pattern becomes common
  * across multiple core types.
  */
-export type Matrix4Like = Readonly<{
-  elements: ArrayLike<number>;
-}>;
+export type Matrix4Like = Readonly<{ elements: ArrayLike<number> }>;
 
 /**
  * Represents a four-by-four matrix used to express three-dimensional transformations.
@@ -99,5 +97,14 @@ export class Matrix4 {
     this.elements.set(matrix4.elements);
 
     return this;
+  }
+
+  /**
+   * Creates a new matrix with the same elements as this matrix.
+   *
+   * @returns A new independent matrix.
+   */
+  clone(): Matrix4 {
+    return new Matrix4().copy(this);
   }
 }
