@@ -26,7 +26,20 @@ describe("constructor", () => {
 
 describe("identity()", () => {
   it("resets the matrix to the identity matrix", () => {
-    // TODO
+    const matrix = new Matrix4();
+
+    matrix.elements.fill(2);
+    matrix.identity();
+
+    // oxfmt-ignore
+    const expected = new Float32Array([
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1,
+    ]);
+
+    expect(matrix.elements).toEqual(expected);
   });
 
   it("returns the current matrix instance", () => {
