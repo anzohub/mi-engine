@@ -43,7 +43,10 @@ describe("identity()", () => {
   });
 
   it("returns the current matrix instance", () => {
-    // TODO
+    const matrix = new Matrix4();
+    const result = matrix.identity();
+
+    expect(matrix).toBe(result);
   });
 });
 
