@@ -10,7 +10,17 @@ describe("constructor", () => {
   });
 
   it("initializes the matrix to the identity matrix", () => {
-    // TODO
+    const matrix = new Matrix4();
+
+    // oxfmt-ignore
+    const expected = new Float32Array([
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1,
+    ]);
+
+    expect(matrix.elements).toEqual(expected);
   });
 });
 
