@@ -200,4 +200,24 @@ export class Matrix4 implements Matrix4Like {
 
     return this;
   }
+
+  /**
+   * Sets the translation components of this matrix.
+   *
+   * @param x - The x translation.
+   * @param y - The y translation.
+   * @param z - The z translation.
+   * @returns This matrix, allowing method chaining.
+   *
+   * @remarks
+   * Only the translation components are modified. The remaining elements
+   * are preserved.
+   */
+  setTranslation(x: number, y: number, z: number): this {
+    this.elements[12] = x;
+    this.elements[13] = y;
+    this.elements[14] = z;
+
+    return this;
+  }
 }
