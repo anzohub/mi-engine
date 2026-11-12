@@ -52,7 +52,17 @@ describe("identity()", () => {
 
 describe("copy()", () => {
   it("copies all elements from another matrix", () => {
-    // TODO
+    const source = new Matrix4();
+    const target = new Matrix4();
+
+    for (let index = 0; index < source.elements.length; index++) {
+      source.elements[index] = index + 1;
+    }
+
+    target.elements.fill(2);
+    target.copy(source);
+
+    expect(source.elements).toEqual(target.elements);
   });
 
   it("accepts a matrix-like object", () => {
