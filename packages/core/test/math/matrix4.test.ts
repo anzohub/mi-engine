@@ -66,7 +66,25 @@ describe("copy()", () => {
   });
 
   it("accepts a matrix-like object", () => {
-    // TODO
+    // oxfmt-ignore
+    const source = {
+      elements: new Float32Array([
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1,
+      ])
+    };
+    const target = new Matrix4();
+
+    for (let index = 0; index < source.elements.length; index++) {
+      source.elements[index] = index + 1;
+    }
+
+    target.elements.fill(2);
+    target.copy(source);
+
+    expect(source.elements).toEqual(target.elements);
   });
 
   it("does not modify the source matrix", () => {
